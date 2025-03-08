@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.soccer.mapper.TysPlayerMapper">
+    
+    <resultMap type="TysPlayer" id="TysPlayerResult">
+        <result property="playerId"    column="player_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="name"    column="name"    />
+        <result property="photoUrl"    column="photo_url"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="height"    column="height"    />
+        <result property="weight"    column="weight"    />
+        <result property="position"    column="position"    />
+        <result property="jerseyNumber"    column="jersey_number"    />
+        <result property="contactPhone"    column="contact_phone"    />
+        <result property="guardianContact"    column="guardian_contact"    />
+        <result property="joinDate"    column="join_date"    />
+        <result property="medicalHistory"    column="medical_history"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTysPlayerVo">
+        select player_id, user_id, name, photo_url, birth_date, height, weight, position, jersey_number, contact_phone, guardian_contact, join_date, medical_history, del_flag, create_by, create_time, update_by, update_time from tys_player
+    </sql>
+
+    <select id="selectTysPlayerList" parameterType="TysPlayer" resultMap="TysPlayerResult">
+        <include refid="selectTysPlayerVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="photoUrl != null  and photoUrl != ''"> and photo_url = #{photoUrl}</if>
+            <if test="birthDate != null "> and birth_date = #{birthDate}</if>
+            <if test="height != null "> and height = #{height}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="position != null  and position != ''"> and position = #{position}</if>
+            <if test="jerseyNumber != null "> and jersey_number = #{jerseyNumber}</if>
+            <if test="contactPhone != null  and contactPhone != ''"> and contact_phone = #{contactPhone}</if>
+            <if test="guardianContact != null  and guardianContact != ''"> and guardian_contact = #{guardianContact}</if>
+            <if test="joinDate != null "> and join_date = #{joinDate}</if>
+            <if test="medicalHistory != null  and medicalHistory != ''"> and medical_history = #{medicalHistory}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+        </where>
+    </select>
+    
+    <select id="selectTysPlayerByPlayerId" parameterType="Long" resultMap="TysPlayerResult">
+        <include refid="selectTysPlayerVo"/>
+        where player_id = #{playerId}
+    </select>
+
+    <insert id="insertTysPlayer" parameterType="TysPlayer" useGeneratedKeys="true" keyProperty="playerId">
+        insert into tys_player
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="photoUrl != null">photo_url,</if>
+            <if test="birthDate != null">birth_date,</if>
+            <if test="height != null">height,</if>
+            <if test="weight != null">weight,</if>
+            <if test="position != null">position,</if>
+            <if test="jerseyNumber != null">jersey_number,</if>
+            <if test="contactPhone != null">contact_phone,</if>
+            <if test="guardianContact != null">guardian_contact,</if>
+            <if test="joinDate != null">join_date,</if>
+            <if test="medicalHistory != null">medical_history,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="photoUrl != null">#{photoUrl},</if>
+            <if test="birthDate != null">#{birthDate},</if>
+            <if test="height != null">#{height},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="position != null">#{position},</if>
+            <if test="jerseyNumber != null">#{jerseyNumber},</if>
+            <if test="contactPhone != null">#{contactPhone},</if>
+            <if test="guardianContact != null">#{guardianContact},</if>
+            <if test="joinDate != null">#{joinDate},</if>
+            <if test="medicalHistory != null">#{medicalHistory},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTysPlayer" parameterType="TysPlayer">
+        update tys_player
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="photoUrl != null">photo_url = #{photoUrl},</if>
+            <if test="birthDate != null">birth_date = #{birthDate},</if>
+            <if test="height != null">height = #{height},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="jerseyNumber != null">jersey_number = #{jerseyNumber},</if>
+            <if test="contactPhone != null">contact_phone = #{contactPhone},</if>
+            <if test="guardianContact != null">guardian_contact = #{guardianContact},</if>
+            <if test="joinDate != null">join_date = #{joinDate},</if>
+            <if test="medicalHistory != null">medical_history = #{medicalHistory},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where player_id = #{playerId}
+    </update>
+
+    <delete id="deleteTysPlayerByPlayerId" parameterType="Long">
+        delete from tys_player where player_id = #{playerId}
+    </delete>
+
+    <delete id="deleteTysPlayerByPlayerIds" parameterType="String">
+        delete from tys_player where player_id in 
+        <foreach item="playerId" collection="array" open="(" separator="," close=")">
+            #{playerId}
+        </foreach>
+    </delete>
+</mapper>
