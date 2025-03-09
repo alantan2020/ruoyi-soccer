@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.soccer.mapper.TysTrainingAttendanceMapper">
+    
+    <resultMap type="TysTrainingAttendance" id="TysTrainingAttendanceResult">
+        <result property="attendanceId"    column="attendance_id"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="playerId"    column="player_id"    />
+        <result property="attendanceStatus"    column="attendance_status"    />
+        <result property="arrivalTime"    column="arrival_time"    />
+        <result property="performanceRating"    column="performance_rating"    />
+        <result property="technicalNotes"    column="technical_notes"    />
+        <result property="physicalCondition"    column="physical_condition"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTysTrainingAttendanceVo">
+        select attendance_id, plan_id, player_id, attendance_status, arrival_time, performance_rating, technical_notes, physical_condition, del_flag, create_by, create_time, update_by, update_time from tys_training_attendance
+    </sql>
+
+    <select id="selectTysTrainingAttendanceList" parameterType="TysTrainingAttendance" resultMap="TysTrainingAttendanceResult">
+        <include refid="selectTysTrainingAttendanceVo"/>
+        <where>  
+            <if test="planId != null "> and plan_id = #{planId}</if>
+            <if test="playerId != null "> and player_id = #{playerId}</if>
+            <if test="attendanceStatus != null  and attendanceStatus != ''"> and attendance_status = #{attendanceStatus}</if>
+            <if test="arrivalTime != null "> and arrival_time = #{arrivalTime}</if>
+            <if test="performanceRating != null "> and performance_rating = #{performanceRating}</if>
+            <if test="technicalNotes != null  and technicalNotes != ''"> and technical_notes = #{technicalNotes}</if>
+            <if test="physicalCondition != null  and physicalCondition != ''"> and physical_condition = #{physicalCondition}</if>
+        </where>
+    </select>
+    
+    <select id="selectTysTrainingAttendanceByAttendanceId" parameterType="Long" resultMap="TysTrainingAttendanceResult">
+        <include refid="selectTysTrainingAttendanceVo"/>
+        where attendance_id = #{attendanceId}
+    </select>
+
+    <insert id="insertTysTrainingAttendance" parameterType="TysTrainingAttendance" useGeneratedKeys="true" keyProperty="attendanceId">
+        insert into tys_training_attendance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planId != null">plan_id,</if>
+            <if test="playerId != null">player_id,</if>
+            <if test="attendanceStatus != null">attendance_status,</if>
+            <if test="arrivalTime != null">arrival_time,</if>
+            <if test="performanceRating != null">performance_rating,</if>
+            <if test="technicalNotes != null">technical_notes,</if>
+            <if test="physicalCondition != null">physical_condition,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planId != null">#{planId},</if>
+            <if test="playerId != null">#{playerId},</if>
+            <if test="attendanceStatus != null">#{attendanceStatus},</if>
+            <if test="arrivalTime != null">#{arrivalTime},</if>
+            <if test="performanceRating != null">#{performanceRating},</if>
+            <if test="technicalNotes != null">#{technicalNotes},</if>
+            <if test="physicalCondition != null">#{physicalCondition},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTysTrainingAttendance" parameterType="TysTrainingAttendance">
+        update tys_training_attendance
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="playerId != null">player_id = #{playerId},</if>
+            <if test="attendanceStatus != null">attendance_status = #{attendanceStatus},</if>
+            <if test="arrivalTime != null">arrival_time = #{arrivalTime},</if>
+            <if test="performanceRating != null">performance_rating = #{performanceRating},</if>
+            <if test="technicalNotes != null">technical_notes = #{technicalNotes},</if>
+            <if test="physicalCondition != null">physical_condition = #{physicalCondition},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where attendance_id = #{attendanceId}
+    </update>
+
+    <delete id="deleteTysTrainingAttendanceByAttendanceId" parameterType="Long">
+        delete from tys_training_attendance where attendance_id = #{attendanceId}
+    </delete>
+
+    <delete id="deleteTysTrainingAttendanceByAttendanceIds" parameterType="String">
+        delete from tys_training_attendance where attendance_id in 
+        <foreach item="attendanceId" collection="array" open="(" separator="," close=")">
+            #{attendanceId}
+        </foreach>
+    </delete>
+</mapper>
