@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.soccer.mapper.TysPositionTypeMapper">
+    
+    <resultMap type="TysPositionType" id="TysPositionTypeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="description"    column="description"    />
+        <result property="abbreviation"    column="abbreviation"    />
+    </resultMap>
+
+    <sql id="selectTysPositionTypeVo">
+        select id, name, description, abbreviation from tys_position_type
+    </sql>
+
+    <select id="selectTysPositionTypeList" parameterType="TysPositionType" resultMap="TysPositionTypeResult">
+        <include refid="selectTysPositionTypeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="abbreviation != null  and abbreviation != ''"> and abbreviation = #{abbreviation}</if>
+        </where>
+    </select>
+    
+    <select id="selectTysPositionTypeById" parameterType="Long" resultMap="TysPositionTypeResult">
+        <include refid="selectTysPositionTypeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTysPositionType" parameterType="TysPositionType" useGeneratedKeys="true" keyProperty="id">
+        insert into tys_position_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="description != null">description,</if>
+            <if test="abbreviation != null">abbreviation,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="description != null">#{description},</if>
+            <if test="abbreviation != null">#{abbreviation},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTysPositionType" parameterType="TysPositionType">
+        update tys_position_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="abbreviation != null">abbreviation = #{abbreviation},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTysPositionTypeById" parameterType="Long">
+        delete from tys_position_type where id = #{id}
+    </delete>
+
+    <delete id="deleteTysPositionTypeByIds" parameterType="String">
+        delete from tys_position_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
