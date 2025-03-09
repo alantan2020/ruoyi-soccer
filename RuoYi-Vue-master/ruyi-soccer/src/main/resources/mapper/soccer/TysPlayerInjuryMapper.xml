@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.soccer.mapper.TysPlayerInjuryMapper">
+    
+    <resultMap type="TysPlayerInjury" id="TysPlayerInjuryResult">
+        <result property="injuryId"    column="injury_id"    />
+        <result property="playerId"    column="player_id"    />
+        <result property="injuryDate"    column="injury_date"    />
+        <result property="injuryType"    column="injury_type"    />
+        <result property="recoveryStatus"    column="recovery_status"    />
+        <result property="expectedRecoveryDate"    column="expected_recovery_date"    />
+        <result property="medicalReport"    column="medical_report"    />
+        <result property="rehabilitationPlan"    column="rehabilitation_plan"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTysPlayerInjuryVo">
+        select injury_id, player_id, injury_date, injury_type, recovery_status, expected_recovery_date, medical_report, rehabilitation_plan, del_flag, create_by, create_time, update_by, update_time from tys_player_injury
+    </sql>
+
+    <select id="selectTysPlayerInjuryList" parameterType="TysPlayerInjury" resultMap="TysPlayerInjuryResult">
+        <include refid="selectTysPlayerInjuryVo"/>
+        <where>  
+            <if test="playerId != null "> and player_id = #{playerId}</if>
+            <if test="injuryDate != null "> and injury_date = #{injuryDate}</if>
+            <if test="injuryType != null  and injuryType != ''"> and injury_type = #{injuryType}</if>
+            <if test="recoveryStatus != null  and recoveryStatus != ''"> and recovery_status = #{recoveryStatus}</if>
+            <if test="expectedRecoveryDate != null "> and expected_recovery_date = #{expectedRecoveryDate}</if>
+            <if test="medicalReport != null  and medicalReport != ''"> and medical_report = #{medicalReport}</if>
+            <if test="rehabilitationPlan != null  and rehabilitationPlan != ''"> and rehabilitation_plan = #{rehabilitationPlan}</if>
+        </where>
+    </select>
+    
+    <select id="selectTysPlayerInjuryByInjuryId" parameterType="Long" resultMap="TysPlayerInjuryResult">
+        <include refid="selectTysPlayerInjuryVo"/>
+        where injury_id = #{injuryId}
+    </select>
+
+    <insert id="insertTysPlayerInjury" parameterType="TysPlayerInjury" useGeneratedKeys="true" keyProperty="injuryId">
+        insert into tys_player_injury
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="playerId != null">player_id,</if>
+            <if test="injuryDate != null">injury_date,</if>
+            <if test="injuryType != null and injuryType != ''">injury_type,</if>
+            <if test="recoveryStatus != null">recovery_status,</if>
+            <if test="expectedRecoveryDate != null">expected_recovery_date,</if>
+            <if test="medicalReport != null">medical_report,</if>
+            <if test="rehabilitationPlan != null">rehabilitation_plan,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="playerId != null">#{playerId},</if>
+            <if test="injuryDate != null">#{injuryDate},</if>
+            <if test="injuryType != null and injuryType != ''">#{injuryType},</if>
+            <if test="recoveryStatus != null">#{recoveryStatus},</if>
+            <if test="expectedRecoveryDate != null">#{expectedRecoveryDate},</if>
+            <if test="medicalReport != null">#{medicalReport},</if>
+            <if test="rehabilitationPlan != null">#{rehabilitationPlan},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTysPlayerInjury" parameterType="TysPlayerInjury">
+        update tys_player_injury
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="playerId != null">player_id = #{playerId},</if>
+            <if test="injuryDate != null">injury_date = #{injuryDate},</if>
+            <if test="injuryType != null and injuryType != ''">injury_type = #{injuryType},</if>
+            <if test="recoveryStatus != null">recovery_status = #{recoveryStatus},</if>
+            <if test="expectedRecoveryDate != null">expected_recovery_date = #{expectedRecoveryDate},</if>
+            <if test="medicalReport != null">medical_report = #{medicalReport},</if>
+            <if test="rehabilitationPlan != null">rehabilitation_plan = #{rehabilitationPlan},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where injury_id = #{injuryId}
+    </update>
+
+    <delete id="deleteTysPlayerInjuryByInjuryId" parameterType="Long">
+        delete from tys_player_injury where injury_id = #{injuryId}
+    </delete>
+
+    <delete id="deleteTysPlayerInjuryByInjuryIds" parameterType="String">
+        delete from tys_player_injury where injury_id in 
+        <foreach item="injuryId" collection="array" open="(" separator="," close=")">
+            #{injuryId}
+        </foreach>
+    </delete>
+</mapper>
