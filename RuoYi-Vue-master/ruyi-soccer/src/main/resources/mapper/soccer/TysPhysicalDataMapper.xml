@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.soccer.mapper.TysPhysicalDataMapper">
+    
+    <resultMap type="TysPhysicalData" id="TysPhysicalDataResult">
+        <result property="dataId"    column="data_id"    />
+        <result property="playerId"    column="player_id"    />
+        <result property="recordDate"    column="record_date"    />
+        <result property="weight"    column="weight"    />
+        <result property="bodyFat"    column="body_fat"    />
+        <result property="muscleMass"    column="muscle_mass"    />
+        <result property="vo2max"    column="vo2max"    />
+        <result property="sprint30m"    column="sprint_30m"    />
+        <result property="verticalJump"    column="vertical_jump"    />
+        <result property="benchPress"    column="bench_press"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTysPhysicalDataVo">
+        select data_id, player_id, record_date, weight, body_fat, muscle_mass, vo2max, sprint_30m, vertical_jump, bench_press, del_flag, create_by, create_time, update_by, update_time from tys_physical_data
+    </sql>
+
+    <select id="selectTysPhysicalDataList" parameterType="TysPhysicalData" resultMap="TysPhysicalDataResult">
+        <include refid="selectTysPhysicalDataVo"/>
+        <where>  
+            <if test="playerId != null "> and player_id = #{playerId}</if>
+            <if test="recordDate != null "> and record_date = #{recordDate}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="bodyFat != null "> and body_fat = #{bodyFat}</if>
+            <if test="muscleMass != null "> and muscle_mass = #{muscleMass}</if>
+            <if test="vo2max != null "> and vo2max = #{vo2max}</if>
+            <if test="sprint30m != null "> and sprint_30m = #{sprint30m}</if>
+            <if test="verticalJump != null "> and vertical_jump = #{verticalJump}</if>
+            <if test="benchPress != null "> and bench_press = #{benchPress}</if>
+        </where>
+    </select>
+    
+    <select id="selectTysPhysicalDataByDataId" parameterType="Long" resultMap="TysPhysicalDataResult">
+        <include refid="selectTysPhysicalDataVo"/>
+        where data_id = #{dataId}
+    </select>
+
+    <insert id="insertTysPhysicalData" parameterType="TysPhysicalData" useGeneratedKeys="true" keyProperty="dataId">
+        insert into tys_physical_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="playerId != null">player_id,</if>
+            <if test="recordDate != null">record_date,</if>
+            <if test="weight != null">weight,</if>
+            <if test="bodyFat != null">body_fat,</if>
+            <if test="muscleMass != null">muscle_mass,</if>
+            <if test="vo2max != null">vo2max,</if>
+            <if test="sprint30m != null">sprint_30m,</if>
+            <if test="verticalJump != null">vertical_jump,</if>
+            <if test="benchPress != null">bench_press,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="playerId != null">#{playerId},</if>
+            <if test="recordDate != null">#{recordDate},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="bodyFat != null">#{bodyFat},</if>
+            <if test="muscleMass != null">#{muscleMass},</if>
+            <if test="vo2max != null">#{vo2max},</if>
+            <if test="sprint30m != null">#{sprint30m},</if>
+            <if test="verticalJump != null">#{verticalJump},</if>
+            <if test="benchPress != null">#{benchPress},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTysPhysicalData" parameterType="TysPhysicalData">
+        update tys_physical_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="playerId != null">player_id = #{playerId},</if>
+            <if test="recordDate != null">record_date = #{recordDate},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="bodyFat != null">body_fat = #{bodyFat},</if>
+            <if test="muscleMass != null">muscle_mass = #{muscleMass},</if>
+            <if test="vo2max != null">vo2max = #{vo2max},</if>
+            <if test="sprint30m != null">sprint_30m = #{sprint30m},</if>
+            <if test="verticalJump != null">vertical_jump = #{verticalJump},</if>
+            <if test="benchPress != null">bench_press = #{benchPress},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where data_id = #{dataId}
+    </update>
+
+    <delete id="deleteTysPhysicalDataByDataId" parameterType="Long">
+        delete from tys_physical_data where data_id = #{dataId}
+    </delete>
+
+    <delete id="deleteTysPhysicalDataByDataIds" parameterType="String">
+        delete from tys_physical_data where data_id in 
+        <foreach item="dataId" collection="array" open="(" separator="," close=")">
+            #{dataId}
+        </foreach>
+    </delete>
+</mapper>
